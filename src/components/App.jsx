@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import Contact from './Contact/Contact';
 import Form from './Form/Form';
 
 class App extends Component {
@@ -11,15 +12,6 @@ class App extends Component {
       name: data,
     });
   };
-
-  // checkContactList=()=>{
-  //   const { name } = this.state;
-  //    this.setState({
-  //       contacts: [name],
-  //     });
-  // }
-
-  addStateContact = () => {};
 
   addContact = () => {
     const { name, contacts } = this.state;
@@ -34,19 +26,8 @@ class App extends Component {
         };
       });
     }
-
-    console.log(contacts === true);
-    return;
   };
 
-  // if (check === [])
-  //   this.state(prev => {
-  //     console.log(name);
-  //     return {
-  //       contacts: [...prev, ...name],
-  //     };
-  //   });
-  // };
   render() {
     return (
       <div
@@ -59,6 +40,7 @@ class App extends Component {
           color: '#010101',
         }}
       >
+        <Contact props={this.state.contacts} />
         <Form handleChange={this.handleChange} addContact={this.addContact} />
       </div>
     );
