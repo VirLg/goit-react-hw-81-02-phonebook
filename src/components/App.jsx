@@ -12,17 +12,41 @@ class App extends Component {
     });
   };
 
+  // checkContactList=()=>{
+  //   const { name } = this.state;
+  //    this.setState({
+  //       contacts: [name],
+  //     });
+  // }
+
+  addStateContact = () => {};
+
   addContact = () => {
-    const { contacts, name } = this.state;
-    const check = contacts.filter(el => el.name === name);
-    if (check === [])
-      this.state(prev => {
-        console.log(name);
+    const { name, contacts } = this.state;
+    if (contacts) {
+      const check = contacts.find(el => el.name === name.name);
+      if (check) {
+        return alert('NoNoNo');
+      }
+      this.setState(prev => {
         return {
-          contacts: [...prev, ...name],
+          contacts: [name, ...prev.contacts],
         };
       });
+    }
+
+    console.log(contacts === true);
+    return;
   };
+
+  // if (check === [])
+  //   this.state(prev => {
+  //     console.log(name);
+  //     return {
+  //       contacts: [...prev, ...name],
+  //     };
+  //   });
+  // };
   render() {
     return (
       <div

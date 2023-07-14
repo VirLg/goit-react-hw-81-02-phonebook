@@ -10,7 +10,9 @@ class Form extends Component {
   };
   handleSubmit = evt => {
     evt.preventDefault();
-    this.props.addContact(100);
+
+    this.props.addContact();
+    evt.target[0].value = '';
   };
   render() {
     return (
