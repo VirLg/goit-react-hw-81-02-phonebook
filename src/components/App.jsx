@@ -1,11 +1,15 @@
 import { Component } from 'react';
 import Contact from './Contact/Contact';
+import Filter from './Filter/Filter';
+
 import Form from './Form/Form';
 
 class App extends Component {
   state = {
     contacts: [],
     name: '',
+    // number: '',
+    filter: '',
   };
   handleChange = data => {
     this.setState({
@@ -27,6 +31,16 @@ class App extends Component {
       });
     }
   };
+  filterContact = data => {
+    console.log(data);
+    const { filter, contacts } = this.state;
+    if (data && contacts !== []) {
+      const visible = contacts.filter(el => el.name.includes(data));
+      this.setState({
+        filter: visible,
+      });
+    }
+  };
 
   render() {
     return (
@@ -40,8 +54,10 @@ class App extends Component {
           color: '#010101',
         }}
       >
-        <Contact props={this.state.contacts} />
+        <Contact props={this.state.contacts} visible={this.state.filter} />
         <Form handleChange={this.handleChange} addContact={this.addContact} />
+
+        <Filter handleFilter={this.filterContact} />
       </div>
     );
   }

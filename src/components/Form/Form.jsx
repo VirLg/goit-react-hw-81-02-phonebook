@@ -6,6 +6,7 @@ class Form extends Component {
   handleChange = data => {
     this.props.handleChange({
       name: data.target.value,
+      // number: data.target.value,
     });
   };
   handleSubmit = evt => {
@@ -25,6 +26,7 @@ class Form extends Component {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
+
         <button type="submit">Add Contact</button>
       </form>
     );
@@ -34,3 +36,13 @@ class Form extends Component {
 Form.propTypes = {};
 
 export default Form;
+{
+  /* <input
+onChange={this.handleChange}
+type="tel"
+name="number"
+pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+required
+/> */
+}
