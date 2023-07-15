@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Contact = ({ props, visible, deleteContact }) => {
-  console.log(props);
-  console.log(visible);
-  if (!visible) {
-    visible = [];
-  }
+  // console.log(props);
+  // console.log(visible);
+
   return props.map(({ name, id }) => {
     const getId = () => {
       deleteContact(id);

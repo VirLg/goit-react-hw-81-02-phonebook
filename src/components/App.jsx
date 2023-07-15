@@ -8,18 +8,13 @@ import Form from './Form/Form';
 class App extends Component {
   state = {
     contacts: [],
-    name: '',
-    // number: '',
     filter: '',
   };
-  handleChange = data => {
-    this.setState({
-      name: data,
-    });
-  };
 
-  addContact = () => {
-    const { name, contacts } = this.state;
+  addContact = props => {
+    const { name, number } = props;
+
+    const { contacts } = this.state;
 
     if (contacts) {
       const check = contacts.find(el => el.name === name.name);
@@ -30,7 +25,8 @@ class App extends Component {
         return {
           contacts: [
             {
-              name: name.name,
+              name,
+              number,
               id: nanoid(),
             },
             ...prev.contacts,
@@ -41,22 +37,17 @@ class App extends Component {
   };
   filterContact = data => {
     console.log(data);
-    const { contacts } = this.state;
-    if (data && contacts !== []) {
-      const visible = contacts.filter(({ name }) => name.includes(data));
-      this.setState({
-        filter: visible,
-      });
-    }
-    console.log(this.state.contacts);
+    this.setState(prev => {
+      return {
+        filter: prev.contacts.filter(el => el.name.includes(data)),
+      };
+    });
   };
   deleteContact = id => {
-    const { contacts } = this.state;
-    const del = contacts.filter(el => el.id !== id);
-    console.log(id);
-
-    this.setState({
-      contacts: del,
+    this.setState(prev => {
+      return {
+        contacts: prev.contacts.filter(el => el.id !== id),
+      };
     });
   };
 
@@ -77,7 +68,7 @@ class App extends Component {
           visible={this.state.filter}
           deleteContact={this.deleteContact}
         />
-        <Form handleChange={this.handleChange} addContact={this.addContact} />
+        <Form addContact={this.addContact} />
 
         <Filter handleFilter={this.filterContact} />
       </div>
