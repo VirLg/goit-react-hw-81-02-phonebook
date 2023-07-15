@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Filter = ({ handleFilter }) => {
-  const handleFilterChange = data => {
-    handleFilter(data.target.value);
+const Filter = ({ handleFilter, filerContact }) => {
+  const filterContact = data => {
+    const check = data.target.value;
+
+    const renderFilter = handleFilter.filter(el => el.name.includes(check));
+    filerContact(renderFilter);
   };
+
   return (
     <input
-      onChange={handleFilterChange}
+      onChange={filterContact}
       type="tel"
       name="number"
       pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

@@ -1,19 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Contact = ({ props, visible, deleteContact }) => {
+const Contact = ({ props, visible }) => {
   // console.log(props);
-  // console.log(visible);
 
-  return props.map(({ name, id }) => {
-    const getId = () => {
-      deleteContact(id);
-      return id;
-    };
+  let render = props;
+  if (visible) {
+    render = visible;
+  } else {
+    render = props;
+  }
+  const deleteContact = id => {
+    render = render.filter(el => el.id !== id);
+    console.log(render);
+  };
+  console.log(render);
+  return render.map(({ name, id }) => {
     return (
       <div key={id}>
         <h2>{name}</h2>
-        <button type="button" onClick={() => getId(id)}>
+        <button type="button" onClick={() => deleteContact(id)}>
           Delete
         </button>
       </div>

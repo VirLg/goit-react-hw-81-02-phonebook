@@ -35,22 +35,20 @@ class App extends Component {
       });
     }
   };
-  filterContact = data => {
-    console.log(data);
-    this.setState(prev => {
-      return {
-        filter: prev.contacts.filter(el => el.name.includes(data)),
-      };
-    });
-  };
+
   deleteContact = id => {
     this.setState(prev => {
+      console.log(this.state.filter);
       return {
-        contacts: prev.contacts.filter(el => el.id !== id),
+        contacts: (prev.filter || prev.contacts).filter(el => el.id !== id),
       };
     });
   };
-
+  filerContact = data => {
+    this.setState({
+      filter: data,
+    });
+  };
   render() {
     return (
       <div
@@ -70,7 +68,10 @@ class App extends Component {
         />
         <Form addContact={this.addContact} />
 
-        <Filter handleFilter={this.filterContact} />
+        <Filter
+          handleFilter={this.state.contacts}
+          filerContact={this.filerContact}
+        />
       </div>
     );
   }
