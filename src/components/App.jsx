@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { nanoid } from 'nanoid';
 import Contact from './Contact/Contact';
 import Filter from './Filter/Filter';
 
@@ -19,6 +20,7 @@ class App extends Component {
 
   addContact = () => {
     const { name, contacts } = this.state;
+
     if (contacts) {
       const check = contacts.find(el => el.name === name.name);
       if (check) {
@@ -26,20 +28,36 @@ class App extends Component {
       }
       this.setState(prev => {
         return {
-          contacts: [name, ...prev.contacts],
+          contacts: [
+            {
+              name: name.name,
+              id: nanoid(),
+            },
+            ...prev.contacts,
+          ],
         };
       });
     }
   };
   filterContact = data => {
     console.log(data);
-    const { filter, contacts } = this.state;
+    const { contacts } = this.state;
     if (data && contacts !== []) {
-      const visible = contacts.filter(el => el.name.includes(data));
+      const visible = contacts.filter(({ name }) => name.includes(data));
       this.setState({
         filter: visible,
       });
     }
+    console.log(this.state.contacts);
+  };
+  deleteContact = id => {
+    const { contacts } = this.state;
+    const del = contacts.filter(el => el.id !== id);
+    console.log(id);
+
+    this.setState({
+      contacts: del,
+    });
   };
 
   render() {
@@ -54,7 +72,11 @@ class App extends Component {
           color: '#010101',
         }}
       >
-        <Contact props={this.state.contacts} visible={this.state.filter} />
+        <Contact
+          props={this.state.contacts}
+          visible={this.state.filter}
+          deleteContact={this.deleteContact}
+        />
         <Form handleChange={this.handleChange} addContact={this.addContact} />
 
         <Filter handleFilter={this.filterContact} />
