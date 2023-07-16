@@ -13,11 +13,10 @@ class App extends Component {
 
   addContact = props => {
     const { name, number } = props;
-
     const { contacts } = this.state;
 
     if (contacts) {
-      const check = contacts.find(el => el.name === name.name);
+      const check = contacts.find(el => el.name === name);
       if (check) {
         return alert('NoNoNo');
       }
@@ -35,21 +34,33 @@ class App extends Component {
       });
     }
   };
+  filterContact = e => {
+    this.setState({
+      filter: e.target.value,
+    });
+    this.filterArrContact();
+  };
+
+  // filterArrContact = () => {
+  //   const { contacts, filter } = this.state;
+  //   this.setState({
+  //     contacts: contacts.filter(el => el.name.includes(filter)),
+  //   });
+  // };
 
   deleteContact = id => {
     this.setState(prev => {
-      console.log(this.state.filter);
       return {
-        contacts: (prev.filter || prev.contacts).filter(el => el.id !== id),
+        contacts: prev.contacts.filter(el => el.id !== id),
       };
     });
   };
-  filerContact = data => {
-    this.setState({
-      filter: data,
-    });
-  };
+
   render() {
+    const visible = this.state.contacts.filter(el =>
+      el.name.includes(this.state.filter)
+    );
+
     return (
       <div
         style={{
@@ -62,15 +73,15 @@ class App extends Component {
         }}
       >
         <Contact
-          props={this.state.contacts}
-          visible={this.state.filter}
+          props={visible}
+          // visible={this.state.filter}
           deleteContact={this.deleteContact}
         />
         <Form addContact={this.addContact} />
 
         <Filter
-          handleFilter={this.state.contacts}
-          filerContact={this.filerContact}
+          filterContact={this.filterContact}
+          stateFilter={this.state.filter}
         />
       </div>
     );

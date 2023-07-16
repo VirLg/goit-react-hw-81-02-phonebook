@@ -7,8 +7,8 @@ class Form extends Component {
     name: '',
     number: '',
   };
-  handleChange = () => {};
-  handleTest = evt => {
+
+  handleChange = evt => {
     this.setState({
       [evt.target.name]: evt.target.value,
     });
@@ -17,15 +17,17 @@ class Form extends Component {
     evt.preventDefault();
 
     this.props.addContact(this.state);
-    evt.target[0].value = '';
-    evt.target[1].value = '';
+    this.setState({
+      name: '',
+      number: '',
+    });
   };
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <input
-          onChange={this.handleTest}
-          // value={input.tagtet.value}
+          onChange={this.handleChange}
+          value={this.state.name}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -33,7 +35,8 @@ class Form extends Component {
           required
         />
         <input
-          onChange={this.handleTest}
+          onChange={this.handleChange}
+          value={this.state.number}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

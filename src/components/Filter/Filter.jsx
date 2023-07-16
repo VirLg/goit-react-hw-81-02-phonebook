@@ -1,21 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Filter = ({ handleFilter, filerContact }) => {
-  const filterContact = data => {
-    const check = data.target.value;
-
-    const renderFilter = handleFilter.filter(el => el.name.includes(check));
-    filerContact(renderFilter);
-  };
-
+const Filter = ({ filterContact, stateFilter }) => {
   return (
     <input
       onChange={filterContact}
-      type="tel"
-      name="number"
-      pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-      title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+      value={stateFilter}
+      type="text"
+      name="filter"
+      pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+      title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
       required
     />
   );
